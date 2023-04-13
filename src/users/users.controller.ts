@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Body,
+  Get,
   Req,
   UseGuards,
   UnauthorizedException,
@@ -14,6 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
+import { AuthenticatedRequest } from 'src/auth/authenticated-request.interface';
 
 @Controller()
 export class UsersController {
@@ -49,7 +51,14 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
-  async logOut(@Req() req: Request) {
+  async logOut(@Req() req: AuthenticatedRequest) {
     // TODO: implement logout
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('users/profile')
+  async getUserProfile(@Req() req: AuthenticatedRequest) {
+    const { name, email, _id, createdAt } = req.user;
+    return { name, email, _id, createdAt };
   }
 }

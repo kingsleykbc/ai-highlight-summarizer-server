@@ -24,9 +24,9 @@ npm install`
 
 3.  Create an `.env` file with the following values:
 
-`DB_URI=<your-mongodb-connection-string>
-OPENAI_API_KEY=<your-openai-api-key>
-JWT_SECRET=<your-jwt-secret>`
+- `DB_URI` = your-mongodb-connection-string
+- `OPENAI_API_KEY` = your-openai-api-key
+- `JWT_SECRET` = your preferred JWT secret
 
 ## Running the server
 
@@ -41,7 +41,3 @@ To run the server in development mode, run the following command:
 ## Contributing
 
 If you find any issues or have any suggestions for improvement, feel free to create an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](https://chat.openai.com/LICENSE).

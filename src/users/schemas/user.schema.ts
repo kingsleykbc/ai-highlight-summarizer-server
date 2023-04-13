@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 export type UserDocument = User & Document;
@@ -40,6 +40,7 @@ UserSchema.methods.comparePassword = async function (password: string) {
 
 export interface User {
   id: string;
+  _id: mongoose.Types.ObjectId;
   name: string;
   email: string;
   password: string;

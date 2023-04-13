@@ -43,7 +43,6 @@ export class HighlightsService {
       },
       this.openAiApi.headers,
     );
-    console.log({ text }, response.data.choices);
     return response.data.choices[0].text.trim();
   }
 
@@ -75,8 +74,6 @@ export class HighlightsService {
       summary = data[0];
       tags = data[1];
     } catch (error) {
-      console.log(error.message);
-      // console.log({ error: error.response.data });
       throw new InternalServerErrorException(
         'Error processing data. Please try again later',
       );
@@ -114,7 +111,6 @@ export class HighlightsService {
   }
 
   async delete(userID: string, id: string): Promise<Highlight> {
-    console.log({ userID, id });
     return this.highlightModel.findOneAndDelete({ _id: id, userID });
   }
 }
