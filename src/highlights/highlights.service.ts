@@ -5,6 +5,7 @@ import { SummarizeHighlightDto } from './dto/summarize-highlight.dto';
 import { Highlight, HighlightDocument } from './schemas/highlight.schema';
 import axios from 'axios';
 import { FindUserHighlightsDto } from './dto/find-user-highlights.dto';
+import { EditHighlightDto } from './dto/edit-highlight.dto';
 
 @Injectable()
 export class HighlightsService {
@@ -105,12 +106,15 @@ export class HighlightsService {
       .exec();
   }
 
-  async update(userId: string, highlight: Highlight): Promise<Highlight> {
-    const { _id, text, label } = highlight;
-    return this.highlightModel.findOneAndUpdate(
-      { _id, author: userId },
-      { text, label },
-      { new: true },
-    );
+  async update(userID: string, data: EditHighlightDto): Promise<Highlight> {
+    const { id: _id, ...updateData } = data;
+    return this.highlightModel.findOneAndUpdate({ _id, userID }, updateData, {
+      new: true,
+    });
+  }
+
+  async delete(userID: string, id: string): Promise<Highlight> {
+    console.log({ userID, id });
+    return this.highlightModel.findOneAndDelete({ _id: id, userID });
   }
 }

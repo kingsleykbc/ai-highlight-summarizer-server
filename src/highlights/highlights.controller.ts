@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Put,
   Query,
@@ -15,6 +17,7 @@ import { Highlight } from './schemas/highlight.schema';
 import { HighlightsService } from './highlights.service';
 import { AuthenticatedRequest } from 'src/auth/authenticated-request.interface';
 import { FindUserHighlightsDto } from './dto/find-user-highlights.dto';
+import { EditHighlightDto } from './dto/edit-highlight.dto';
 
 @Controller('highlights')
 export class HighlightsController {
@@ -44,9 +47,16 @@ export class HighlightsController {
   @Put()
   async update(
     @Req() req: AuthenticatedRequest,
-    @Body() updateHighlightDto: Highlight,
+    @Body(new ValidationPipe()) updateHighlightDto: EditHighlightDto,
   ) {
     const user = req.user;
     return this.highlightsService.update(user.id, updateHighlightDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async delete(@Req() req: AuthenticatedRequest, @Param('id') id: string) {
+    const user = req.user;
+    return this.highlightsService.delete(user.id, id);
   }
 }
